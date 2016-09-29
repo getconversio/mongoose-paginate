@@ -142,12 +142,12 @@ describe('mongoose-paginate', function() {
         expect(result.docs[0].author.name).to.equal('Arthur Conan Doyle');
       });
     });
-    describe('with hint', function(done) {
-      it('fails with a bad hint', function() {
-        return Book.paginate({}, { hint: {} })
+    describe('with hint', function() {
+      it('fails with a bad hint', function(done) {
+        return Book.paginate({}, { hint: { date: 1 } })
           .then(() => done(new Error('should have rejected')))
           .catch(err => {
-            expect(err).to.be.an('error');
+            expect(err.name).to.equal('MongoError');
             expect(err.message).to.match(/bad hint/);
             done();
           })
