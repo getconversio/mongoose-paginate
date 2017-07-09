@@ -26,15 +26,15 @@ function paginate(query, options, callback) {
   let populate = options.populate;
   let lean = options.lean || false;
   let leanWithId = options.hasOwnProperty('leanWithId') ? options.leanWithId : true;
-  let limit = options.hasOwnProperty('limit') ? options.limit : 10;
+  let limit = options.hasOwnProperty('limit') ? Number(options.limit) : 10;
   let hint = options.hint;
   let page, offset, skip, promises = [];
 
   if (options.hasOwnProperty('offset')) {
-    offset = options.offset;
+    offset = Number(options.offset);
     skip = offset;
   } else if (options.hasOwnProperty('page')) {
-    page = options.page;
+    page = Number(options.page);
     skip = (page - 1) * limit;
   } else {
     page = 1;
